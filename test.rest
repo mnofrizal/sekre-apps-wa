@@ -1,0 +1,61 @@
+### Test API Status
+GET http://localhost:5300
+Content-Type: application/json
+
+### Check Authentication Status
+GET http://localhost:5300/api/auth/status
+Content-Type: application/json
+
+### Send Message using Template
+POST http://localhost:5300/api/messages/send
+Content-Type: application/json
+
+{
+    "phone": "6287733760363",
+    "template": "fitAndProper",
+    "templateData": {
+        "name": "John Doe", 
+        "grade": "Senior Manager",
+        "link": "https://talenttune.example.com/schedule/123"
+    }
+}
+
+### Send Meal Order Message
+POST http://localhost:5300/api/messages/send-meal
+Content-Type: application/json
+
+{
+    "phone": "6287733760363",
+    "judulPekerjaan": "Meeting Project X",
+    "subBidang":"Fasilitas dan Sarana",
+    "requiredDate": "2024-01-21T12:00:00.000Z",
+    "requestDate":"2024-01-21T12:00:00.000Z",
+    "dropPoint": "Ruang Meeting Lt. 3",
+    "totalEmployees": 5,
+    "approvalToken":"242552fqwef",
+}
+
+### Send Direct Message
+POST http://localhost:5300/api/messages/confirm-to-ga
+Content-Type: application/json
+
+{
+    "phone": "6287733760363",
+    "token": "3535"
+}
+### Send Direct Message
+POST http://localhost:5300/api/messages/send
+Content-Type: application/json
+
+{
+    "phone": "6287733760363",
+    "message": "Hello, this is a direct message!"
+}
+
+### Check Message Status
+GET http://localhost:5300/api/messages/status
+Content-Type: application/json
+
+### Logout
+POST http://localhost:5300/api/auth/logout
+Content-Type: application/json
