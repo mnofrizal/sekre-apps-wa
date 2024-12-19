@@ -1,3 +1,4 @@
+const { FRONT_END_URL } = require("../config/constants");
 const client = require("../config/whatsapp");
 const { compileTemplate } = require("../utils/messageTemplates");
 
@@ -103,7 +104,7 @@ const sendMessageMeal = async (req, res) => {
       });
     }
 
-    const formatedLink = `https://9c58-180-254-79-208.ngrok-free.app/requests/approval/${approvalToken}`;
+    const formatedLink = `${FRONT_END_URL}/requests/approval/${approvalToken}`;
     const formatedRequestDate = new Date(requestDate).toLocaleDateString(
       "id-ID",
       {
@@ -181,7 +182,7 @@ const sendToGA = async (req, res) => {
       });
     }
 
-    const formatedLink = `https://9c58-180-254-79-208.ngrok-free.app/requests/approval/${approvalToken}`;
+    const formatedLink = `${FRONT_END_URL}/requests/approval/${approvalToken}`;
 
     // Prepare the message using pemesananMakanan template
     const templateData = {
