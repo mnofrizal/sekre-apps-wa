@@ -4,7 +4,13 @@ const { compileTemplate } = require("../utils/messageTemplates");
 
 const sendMessage = async (req, res) => {
   try {
-    const { phone, template, templateData, message: directMessage } = req.body;
+    const {
+      id,
+      phone,
+      template,
+      templateData,
+      message: directMessage,
+    } = req.body;
 
     if (!phone || (!template && !directMessage)) {
       return res.status(400).json({
@@ -61,6 +67,7 @@ const sendMessage = async (req, res) => {
 const sendMessageMeal = async (req, res) => {
   try {
     const {
+      id,
       phone,
       judulPekerjaan,
       subBidang,
@@ -104,22 +111,40 @@ const sendMessageMeal = async (req, res) => {
       });
     }
 
-    const formatedLink = `${FRONT_END_URL}/requests/approval/${approvalToken}`;
-    const formatedRequestDate = new Date(requestDate).toLocaleDateString(
-      "id-ID",
-      {
+    const newRequiredDate = new Date(requiredDate);
+    let formattedRequiredDate;
+    const hour = newRequiredDate.getHours();
+    if (hour >= 4 && hour < 8) {
+      formattedRequiredDate = "SARAPAN";
+    } else if (hour >= 8 && hour < 12) {
+      formattedRequiredDate = "MAKAN SIANG";
+    } else if (hour >= 12 && hour < 17) {
+      formattedRequiredDate = "MAKAN SORE";
+    } else {
+      formattedRequiredDate = "MAKAN MALAM";
+    }
+
+    const formatedLink = `${FRONT_END_URL}/approval/${approvalToken}`;
+    const formatedRequestDate = new Date(requestDate)
+      .toLocaleString("id-ID", {
         weekday: "long",
         day: "numeric",
         month: "short",
         year: "numeric",
-      }
-    );
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        timeZone: "Asia/Jakarta",
+        hour12: false,
+      })
+      .replace(/\./g, ":");
 
     // Prepare the message using pemesananMakanan template
     const templateData = {
+      id,
       judulPekerjaan,
       subBidang,
-      requiredDate,
+      requiredDate: formattedRequiredDate,
       requestDate: formatedRequestDate,
       dropPoint,
       totalEmployees,
@@ -155,7 +180,17 @@ const sendMessageMeal = async (req, res) => {
 };
 const sendToGA = async (req, res) => {
   try {
-    const { phone, approvalToken } = req.body;
+    const {
+      id,
+      phone,
+      judulPekerjaan,
+      subBidang,
+      requiredDate,
+      requestDate,
+      dropPoint,
+      totalEmployees,
+      approvalToken,
+    } = req.body;
 
     if (!phone) {
       return res.status(400).json({
@@ -182,10 +217,42 @@ const sendToGA = async (req, res) => {
       });
     }
 
-    const formatedLink = `${FRONT_END_URL}/requests/approval/${approvalToken}`;
+    const newRequiredDate = new Date(requiredDate);
+    let formattedRequiredDate;
+    const hour = newRequiredDate.getHours();
+    if (hour >= 4 && hour < 8) {
+      formattedRequiredDate = "SARAPAN";
+    } else if (hour >= 8 && hour < 12) {
+      formattedRequiredDate = "MAKAN SIANG";
+    } else if (hour >= 12 && hour < 17) {
+      formattedRequiredDate = "MAKAN SORE";
+    } else {
+      formattedRequiredDate = "MAKAN MALAM";
+    }
 
-    // Prepare the message using pemesananMakanan template
+    const formatedLink = `${FRONT_END_URL}/approval/${approvalToken}`;
+    const formatedRequestDate = new Date(requestDate)
+      .toLocaleString("id-ID", {
+        weekday: "long",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        timeZone: "Asia/Jakarta",
+        hour12: false,
+      })
+      .replace(/\./g, ":");
+
     const templateData = {
+      id,
+      judulPekerjaan,
+      subBidang,
+      requiredDate: formattedRequiredDate,
+      requestDate: formatedRequestDate,
+      dropPoint,
+      totalEmployees,
       approvalLink: formatedLink, // Add confirmation link
     };
 
