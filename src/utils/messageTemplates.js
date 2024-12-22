@@ -39,6 +39,12 @@ Apabila Pesanan Sudah sesuai, silahkan ADMIN klik link dibawah ini untuk *APPROV
 
 {approvalLink}`,
   },
+  completeNotif: {
+    template: `Pemesanan {requiredDate} (#{id}) untuk {subBidang} sebanyak {totalEmployees} Porsi telah SUKSES terkirim ke {dropPoint} pada {nowDate}.
+
+Terimakasih. 🙏
+`,
+  },
 };
 
 function compileTemplate(templateName, data) {
