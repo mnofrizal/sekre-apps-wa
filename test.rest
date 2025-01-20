@@ -26,6 +26,7 @@ Content-Type: application/json
 
 {
     "phone": "6287733760363",
+    "groupId": "f3r3r3r3r325",
     "judulPekerjaan": "Meeting Project X",
     "subBidang":"Fasilitas dan Sarana",
     "requiredDate": "2024-01-21T12:00:00.000Z",
@@ -54,6 +55,10 @@ Content-Type: application/json
 
 ### Check Message Status
 GET http://localhost:5300/api/messages/status
+Content-Type: application/json
+
+### Check groups
+GET http://localhost:5300/api/messages/wa-groups
 Content-Type: application/json
 
 ### Logout

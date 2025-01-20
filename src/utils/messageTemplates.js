@@ -21,15 +21,37 @@ Administrasi Perencanaan & Evaluasi SDM SLA PGU`,
 *Total Pesanan     :*  {totalEmployees} Porsi
 *Waktu Pesan      :*  {requestDate}
 
-Apabila Pesanan Sudah sesuai, silahkan klik link diwabh ini untuk konfirmasi
+Apabila Pesanan Sudah sesuai, silahkan klik link dibawah ini untuk konfirmasi
 
 {approvalLink}`,
   },
 
   notifToGa: {
-    template: `Pemesanan makanan terkonfirmasi.
-    Silahkan klik link diobawah ini untuk approval dan melihat detail pemesanan
-    {approvalLink}`,
+    template: `*Pemesanan {requiredDate}*
+
+*Judul Pekerjaan  :*  {judulPekerjaan}
+*Sub Bidang         :*  {subBidang}
+*Drop Point          :*  {dropPoint}
+*Total Pesanan     :*  {totalEmployees} Porsi
+*Waktu Pesan      :*  {requestDate}
+
+Apabila Pesanan Sudah sesuai, silahkan klik link dibawah ini untuk konfirmasi
+
+{approvalLink}`,
+  },
+  notifToKitchen: {
+    template: `*[PEMESANAN BARU] {requiredDate}*
+
+*Judul Pekerjaan  :*  {judulPekerjaan}
+*Sub Bidang         :*  {subBidang}s
+*Drop Point          :*  {dropPoint}
+*Total Pesanan     :*  {totalEmployees} Porsi
+*Waktu Pesan      :*  {requestDate}
+
+Mohon tim dapur untuk dapat memproses pesanan ini.
+Apabila Pesanan Sudah terkirim, silahkan klik link dibawah ini untuk menyelesaiakan pesanan.
+
+{approvalLink}`,
   },
 };
 
