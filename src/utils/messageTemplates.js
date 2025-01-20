@@ -13,12 +13,12 @@ Salam,
 Administrasi Perencanaan & Evaluasi SDM SLA PGU`,
   },
   pemesananMakanan: {
-    template: `*Pemesanan {requiredDate}*
+    template: `*Pemesanan {requiredDate} #{id}*
 
-*Judul Pekerjaan  :*  {judulPekerjaan}
 *Sub Bidang         :*  {subBidang}
-*Drop Point          :*  {dropPoint}
 *Total Pesanan     :*  {totalEmployees} Porsi
+*Judul Pekerjaan  :*  {judulPekerjaan}
+*Drop Point          :*  {dropPoint}
 *Waktu Pesan      :*  {requestDate}
 
 Apabila Pesanan Sudah sesuai, silahkan klik link dibawah ini untuk konfirmasi
