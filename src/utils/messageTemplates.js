@@ -13,45 +13,104 @@ Salam,
 Administrasi Perencanaan & Evaluasi SDM SLA PGU`,
   },
   pemesananMakanan: {
-    template: `*Pemesanan {requiredDate} #{id}*
+    template: `*PEMESANAN BARU #{id}*
 
-*Sub Bidang         :*  {subBidang}
-*Total Pesanan     :*  {totalEmployees} Porsi
-*Judul Pekerjaan  :*  {judulPekerjaan}
-*Drop Point          :*  {dropPoint}
-*Waktu Pesan      :*  {requestDate}
+> *Waktu Pesan   :*  {requestDate}
+> *Perihal             :*  {judulPekerjaan}
+> *Tipe Pesanan   :*  {requiredDate}
 
-Apabila Pesanan Sudah sesuai, silahkan klik link dibawah ini untuk konfirmasi
+> *Sub Bidang          :*  {subBidang}
+> *Jumlah Pesanan   :*  {totalEmployees} Porsi
+> *IP          :*  {ipPortion} Porsi
+> *IPS        :*  {ipsPortion} Porsi
+> *KOP      :*  {kopPortion} Porsi
+> *RSU      :*  {rsuPortion} Porsi
+> *MITRA   :*  {mitraPortion} Porsi
+
+> *Drop Point  :*  {dropPoint}
+> *PIC              :*  {pic}
+> *PIC Phone   :*  {picPhone}
+
+Apabila Pesanan Sudah sesuai, silahkan klik link dibawah ini untuk konfirmasi.
+Link hanya berlaku selama 30 menit.
 
 {approvalLink}`,
   },
 
   notifToGa: {
-    template: `*Pemesanan {requiredDate}*
+    template: `*[ADMIN] PEMESANAN BARU #{id}*
 
-*Judul Pekerjaan  :*  {judulPekerjaan}
-*Sub Bidang         :*  {subBidang}
-*Drop Point          :*  {dropPoint}
-*Total Pesanan     :*  {totalEmployees} Porsi
-*Waktu Pesan      :*  {requestDate}
+> *Waktu Pesan   :*  {requestDate}
+> *Perihal             :*  {judulPekerjaan}
+> *Tipe Pesanan   :*  {requiredDate}
 
-Apabila Pesanan Sudah sesuai, silahkan klik link dibawah ini untuk konfirmasi
+> *Sub Bidang          :*  {subBidang}
+> *Jumlah Pesanan   :*  {totalEmployees} Porsi
+> *IP          :*  {ipPortion} Porsi
+> *IPS        :*  {ipsPortion} Porsi
+> *KOP      :*  {kopPortion} Porsi
+> *RSU      :*  {rsuPortion} Porsi
+> *MITRA   :*  {mitraPortion} Porsi
+
+> *Drop Point  :*  {dropPoint}
+> *PIC              :*  {pic}
+> *PIC Phone   :*  {picPhone}
+
+Apabila Pesanan Sudah sesuai, silahkan klik link dibawah ini untuk konfirmasi.
+Link hanya berlaku selama 30 menit.
 
 {approvalLink}`,
   },
   notifToKitchen: {
-    template: `*[PEMESANAN BARU] {requiredDate}*
+    template: `*PEMESANAN BARU #{id}*
 
-*Judul Pekerjaan  :*  {judulPekerjaan}
-*Sub Bidang         :*  {subBidang}s
-*Drop Point          :*  {dropPoint}
-*Total Pesanan     :*  {totalEmployees} Porsi
-*Waktu Pesan      :*  {requestDate}
+> *Waktu Pesan   :*  {requestDate}
+> *Perihal             :*  {judulPekerjaan}
+> *Tipe Pesanan   :*  {requiredDate}
+
+> *Sub Bidang          :*  {subBidang}
+> *Jumlah Pesanan   :*  {totalEmployees} Porsi
+> *IP          :*  {ipPortion} Porsi
+> *IPS        :*  {ipsPortion} Porsi
+> *KOP      :*  {kopPortion} Porsi
+> *RSU      :*  {rsuPortion} Porsi
+> *MITRA   :*  {mitraPortion} Porsi
+
+> *Drop Point  :*  {dropPoint}
+> *PIC              :*  {pic}
+> *PIC Phone   :*  {picPhone}
 
 Mohon tim dapur untuk dapat memproses pesanan ini.
 Apabila Pesanan Sudah terkirim, silahkan klik link dibawah ini untuk menyelesaiakan pesanan.
 
 {approvalLink}`,
+  },
+  notifStart: {
+    template: `*[PROSES] PEMESANAN #{id}*
+
+Tim dapur telah memproses pesanan:
+
+> *Perihal                  :*  {judulPekerjaan}
+> *Sub Bidang          :*  {subBidang}
+> *Tipe Pesanan       :*  {requiredDate}
+> *Jumlah Pesanan   :*  {totalEmployees} Porsi
+> *Drop Point            :*  {dropPoint}
+> *PIC                        :*  {pic}
+`,
+  },
+  notifFinish: {
+    template: `*[SELESAI] PEMESANAN #{id}*
+
+Tim dapur telah menyelesaikan pesanan:
+
+> *Perihal                  :*  {judulPekerjaan}
+> *Sub Bidang          :*  {subBidang}
+> *Tipe Pesanan       :*  {requiredDate}
+> *Jumlah Pesanan   :*  {totalEmployees} Porsi
+> *Drop Point            :*  {dropPoint}
+> *PIC                        :*  {pic}
+
+Pesanan telah dikirimkan ke lokasi drop point.`,
   },
 };
 
