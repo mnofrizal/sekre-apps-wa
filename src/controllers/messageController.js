@@ -245,6 +245,33 @@ const sendNotifFinish = async (req, res) => {
   }
 };
 
+const sendNotifReject = async (req, res) => {
+  try {
+    const { phone } = req.body;
+
+    if (!phone) {
+      return res.status(400).json({
+        status: false,
+        message: "Phone number is required",
+      });
+    }
+
+    await messageService.sendRejectNotification(req.body);
+
+    res.status(200).json({
+      status: true,
+      message: "Reject notification sent successfully",
+    });
+  } catch (error) {
+    console.error("Error sending reject notification:", error);
+    res.status(500).json({
+      status: false,
+      message: "Failed to send reject notification",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   sendMessage,
   sendMessageMeal,
@@ -253,5 +280,6 @@ module.exports = {
   sendToKitchen,
   sendNotifStart,
   sendNotifFinish,
+  sendNotifReject,
   getWaGroups,
 };

@@ -1,17 +1,4 @@
 const templates = {
-  fitAndProper: {
-    template: `Selamat Siang Bapak/Ibu {name}
-Sehubungan dengan pelaksanaan Fit and Proper Test untuk memotret Kompetensi maupun Potensi Pegawai ke jenjang {grade}.
-
-Berikut kami sampaikan link aplikasi Talent Tune untuk melihat Jadwal, Evaluator dan konfirmasi kehadiran:
-
-{link}
-
-Demikian disampaikan, atas perhatian dan kerja samanya diucapkan terima kasih.                                          
-
-Salam,
-Administrasi Perencanaan & Evaluasi SDM SLA PGU`,
-  },
   pemesananMakanan: {
     template: `*PEMESANAN BARU #{id}*
 
@@ -20,12 +7,13 @@ Administrasi Perencanaan & Evaluasi SDM SLA PGU`,
 > *Tipe Pesanan   :*  {requiredDate}
 
 > *Sub Bidang          :*  {subBidang}
-> *Jumlah Pesanan   :*  {totalEmployees} Porsi
-> *IP          :*  {ipPortion} Porsi
-> *IPS        :*  {ipsPortion} Porsi
-> *KOP      :*  {kopPortion} Porsi
-> *RSU      :*  {rsuPortion} Porsi
-> *MITRA   :*  {mitraPortion} Porsi
+> *Jumlah Pesanan   :*  {totalEmployees} Orang
+> *Menu    :*  {menuPesanan}
+> *IP          :*  {ipPortion} 
+> *IPS        :*  {ipsPortion} 
+> *KOP      :*  {kopPortion} 
+> *RSU      :*  {rsuPortion} 
+> *MITRA   :*  {mitraPortion} 
 
 > *Drop Point  :*  {dropPoint}
 > *PIC              :*  {pic}
@@ -45,12 +33,13 @@ Link hanya berlaku selama 30 menit.
 > *Tipe Pesanan   :*  {requiredDate}
 
 > *Sub Bidang          :*  {subBidang}
-> *Jumlah Pesanan   :*  {totalEmployees} Porsi
-> *IP          :*  {ipPortion} Porsi
-> *IPS        :*  {ipsPortion} Porsi
-> *KOP      :*  {kopPortion} Porsi
-> *RSU      :*  {rsuPortion} Porsi
-> *MITRA   :*  {mitraPortion} Porsi
+> *Jumlah Pesanan   :*  {totalEmployees} Orang
+> *Menu    :*  {menuPesanan}
+> *IP          :*  {ipPortion} 
+> *IPS        :*  {ipsPortion} 
+> *KOP      :*  {kopPortion} 
+> *RSU      :*  {rsuPortion} 
+> *MITRA   :*  {mitraPortion} 
 
 > *Drop Point  :*  {dropPoint}
 > *PIC              :*  {pic}
@@ -69,12 +58,13 @@ Link hanya berlaku selama 30 menit.
 > *Tipe Pesanan   :*  {requiredDate}
 
 > *Sub Bidang          :*  {subBidang}
-> *Jumlah Pesanan   :*  {totalEmployees} Porsi
-> *IP          :*  {ipPortion} Porsi
-> *IPS        :*  {ipsPortion} Porsi
-> *KOP      :*  {kopPortion} Porsi
-> *RSU      :*  {rsuPortion} Porsi
-> *MITRA   :*  {mitraPortion} Porsi
+> *Jumlah Pesanan   :*  {totalEmployees} Orang
+> *Menu    :*  {menuPesanan}
+> *IP          :*  {ipPortion} 
+> *IPS        :*  {ipsPortion} 
+> *KOP      :*  {kopPortion} 
+> *RSU      :*  {rsuPortion} 
+> *MITRA   :*  {mitraPortion} 
 
 > *Drop Point  :*  {dropPoint}
 > *PIC              :*  {pic}
@@ -93,7 +83,7 @@ Tim dapur telah memproses pesanan:
 > *Perihal                  :*  {judulPekerjaan}
 > *Sub Bidang          :*  {subBidang}
 > *Tipe Pesanan       :*  {requiredDate}
-> *Jumlah Pesanan   :*  {totalEmployees} Porsi
+> *Jumlah Pesanan   :*  {totalEmployees} Orang
 > *Drop Point            :*  {dropPoint}
 > *PIC                        :*  {pic}
 `,
@@ -106,11 +96,23 @@ Tim dapur telah menyelesaikan pesanan:
 > *Perihal                  :*  {judulPekerjaan}
 > *Sub Bidang          :*  {subBidang}
 > *Tipe Pesanan       :*  {requiredDate}
-> *Jumlah Pesanan   :*  {totalEmployees} Porsi
+> *Jumlah Pesanan   :*  {totalEmployees} Orang
 > *Drop Point            :*  {dropPoint}
 > *PIC                        :*  {pic}
 
 Pesanan telah dikirimkan ke lokasi drop point.`,
+  },
+  notifReject: {
+    template: `*[CANCEL] PEMESANAN #{id}*
+
+Pesanan dengan detil:
+
+> *Perihal                  :*  {judulPekerjaan}
+> *Sub Bidang          :*  {subBidang}
+> *Tipe Pesanan       :*  {requiredDate}
+> *Jumlah Pesanan   :*  {totalEmployees} Orang
+
+Telah dibatalkan. Mohon hubungi Sekretaris untuk pemesanan kembali.`,
   },
 };
 
@@ -121,7 +123,33 @@ function compileTemplate(templateName, data) {
     throw new Error(`Template '${templateName}' not found`);
   }
 
-  // Replace all placeholders with actual data
+  // Remove lines with 0 portions first
+  const portions = [
+    "ipPortion",
+    "ipsPortion",
+    "kopPortion",
+    "rsuPortion",
+    "mitraPortion",
+  ];
+  portions.forEach((portion) => {
+    const entityName = portion.replace("Portion", "");
+    if (data[portion] === 0) {
+      // Create exact line patterns based on template format
+      const patterns = {
+        ipPortion: "> \\*IP          :\\*  {ipPortion} \\n",
+        ipsPortion: "> \\*IPS        :\\*  {ipsPortion} \\n",
+        kopPortion: "> \\*KOP      :\\*  {kopPortion} \\n",
+        rsuPortion: "> \\*RSU      :\\*  {rsuPortion} \\n",
+        mitraPortion: "> \\*MITRA   :\\*  {mitraPortion} \\n",
+      };
+      const pattern = patterns[portion];
+      if (pattern) {
+        message = message.replace(new RegExp(pattern, "g"), "");
+      }
+    }
+  });
+
+  // Then replace all placeholders with actual data
   Object.entries(data).forEach(([key, value]) => {
     message = message.replace(new RegExp(`{${key}}`, "g"), value);
   });

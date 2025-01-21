@@ -8,6 +8,7 @@ router.post("/confirm-to-ga", messageController.sendToGA);
 router.post("/confirm-to-kitchen", messageController.sendToKitchen);
 router.post("/send-start-notif", messageController.sendNotifStart);
 router.post("/send-finish-notif", messageController.sendNotifFinish);
+router.post("/send-reject-notif", messageController.sendNotifReject);
 router.get("/status", messageController.getStatus);
 router.get("/wa-groups", messageController.getWaGroups);
 
