@@ -14,16 +14,23 @@ class MessageService {
     return formattedPhone;
   }
 
-  getFormattedMealTime = (requiredDate) => {
-    const hours = new Date(requiredDate).getHours();
+  getMealCategory = (date) => {
+    const hours = new Date(date).getHours();
 
-    if (hours >= 4 && hours < 8) {
+    // Breakfast 6 AM WIB (23:00 UTC previous day)
+    if (hours >= 23 || hours < 5) {
       return "Sarapan";
-    } else if (hours >= 8 && hours < 12) {
+    }
+    // Lunch 12 PM WIB (5:00 UTC)
+    else if (hours >= 5 && hours < 9) {
       return "Makan Siang";
-    } else if (hours >= 12 && hours < 17) {
+    }
+    // Afternoon meal 4 PM WIB (9:00 UTC)
+    else if (hours >= 9 && hours < 17) {
       return "Makan Sore";
-    } else if (hours >= 17 || hours < 4) {
+    }
+    // Dinner 11:59 PM WIB (16:59 UTC)
+    else if (hours >= 17 && hours < 23) {
       return "Makan Malam";
     }
     return ""; // fallback
@@ -148,7 +155,7 @@ class MessageService {
     } = orderData;
 
     const portions = this.calculatePortions(employeeOrders);
-    const formattedRequiredDate = this.getFormattedMealTime(requiredDate);
+    const formattedRequiredDate = this.getMealCategory(requiredDate);
     const formatedRequestDate = this.formatRequestDate(requestDate);
     const formatedLink = `${FRONT_END_URL}/approval/${approvalToken}`;
 
@@ -188,7 +195,7 @@ class MessageService {
     } = orderData;
 
     const portions = this.calculatePortions(employeeOrders);
-    const formattedRequiredDate = this.getFormattedMealTime(requiredDate);
+    const formattedRequiredDate = this.getMealCategory(requiredDate);
     const formatedRequestDate = this.formatRequestDate(requestDate);
     const formatedLink = `${FRONT_END_URL}/approval/${approvalToken}`;
 
@@ -228,7 +235,7 @@ class MessageService {
     } = orderData;
 
     const portions = this.calculatePortions(employeeOrders);
-    const formattedRequiredDate = this.getFormattedMealTime(requiredDate);
+    const formattedRequiredDate = this.getMealCategory(requiredDate);
     const formatedRequestDate = this.formatRequestDate(requestDate);
     const formatedLink = `${FRONT_END_URL}/delivery/${approvalToken}`;
 
@@ -285,7 +292,7 @@ class MessageService {
       pic,
     } = data;
 
-    const formattedRequiredDate = this.getFormattedMealTime(requiredDate);
+    const formattedRequiredDate = this.getMealCategory(requiredDate);
 
     const templateData = {
       id,
@@ -314,7 +321,7 @@ class MessageService {
     } = data;
 
     this.validateClient();
-    const formattedRequiredDate = this.getFormattedMealTime(requiredDate);
+    const formattedRequiredDate = this.getMealCategory(requiredDate);
 
     const templateData = {
       id,
@@ -359,7 +366,7 @@ class MessageService {
     } = data;
 
     this.validateClient();
-    const formattedRequiredDate = this.getFormattedMealTime(requiredDate);
+    const formattedRequiredDate = this.getMealCategory(requiredDate);
 
     const templateData = {
       id,
