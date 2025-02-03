@@ -175,6 +175,7 @@ class MessageService {
     };
 
     await this.sendTemplatedMessage(phone, "pemesananMakanan", templateData);
+    console.log(`Meal order confirmation sent to ASMAN ${phone}`);
   }
 
   async sendToGA(orderData) {
@@ -273,10 +274,13 @@ class MessageService {
       );
     });
 
-    return groups.map((group) => ({
+    const result = groups.map((group) => ({
       id: group.id._serialized,
       name: group.name,
     }));
+
+    console.log("Successfully retrieved WhatsApp groups:", result);
+    return result;
   }
 
   async sendStartNotification(data) {
