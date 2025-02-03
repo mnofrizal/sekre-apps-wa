@@ -13,24 +13,23 @@ class MessageService {
     }
     return formattedPhone;
   }
-
   getMealCategory = (date) => {
     const hours = new Date(date).getHours();
 
-    // Breakfast 6 AM WIB (23:00 UTC previous day)
-    if (hours >= 23 || hours < 5) {
+    // Breakfast 4 AM - 11:59 AM WIB (21:00 - 04:59 UTC)
+    if (hours >= 4 && hours < 12) {
       return "Sarapan";
     }
-    // Lunch 12 PM WIB (5:00 UTC)
-    else if (hours >= 5 && hours < 9) {
+    // Lunch 12 PM - 2 PM WIB (05:00 - 07:00 UTC)
+    else if (hours >= 12 && hours < 14) {
       return "Makan Siang";
     }
-    // Afternoon meal 4 PM WIB (9:00 UTC)
-    else if (hours >= 9 && hours < 17) {
+    // Afternoon meal 2 PM - 6 PM WIB (07:00 - 11:00 UTC)
+    else if (hours >= 14 && hours < 18) {
       return "Makan Sore";
     }
-    // Dinner 11:59 PM WIB (16:59 UTC)
-    else if (hours >= 17 && hours < 23) {
+    // Dinner 7 PM - 4 AM WIB (12:00 - 21:00 UTC)
+    else if (hours >= 19 || hours < 4) {
       return "Makan Malam";
     }
     return ""; // fallback
