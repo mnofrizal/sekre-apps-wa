@@ -155,6 +155,8 @@ class MessageService {
 
     const portions = this.calculatePortions(employeeOrders);
     const formattedRequiredDate = this.getMealCategory(requiredDate);
+    console.log({ requiredDate });
+    console.log({ formattedRequiredDate });
     const formatedRequestDate = this.formatRequestDate(requestDate);
     const formatedLink = `${FRONT_END_URL}/approval/${approvalToken}`;
 
