@@ -46,6 +46,7 @@ const sendMessageMeal = async (req, res) => {
       totalEmployees,
       employeeOrders,
       pic,
+      category,
       picPhone,
       approvalToken,
     } = req.body;
