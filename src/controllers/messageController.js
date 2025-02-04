@@ -1,4 +1,9 @@
 const messageService = require("../services/messageService");
+const { BACK_END_URL } = require("../config/constants");
+let fetch;
+import("node-fetch").then((module) => {
+  fetch = module.default;
+});
 
 const sendMessage = async (req, res) => {
   try {
@@ -37,8 +42,6 @@ const sendMessageMeal = async (req, res) => {
     const {
       judulPekerjaan,
       subBidang,
-      requiredDate,
-      requestDate,
       dropPoint,
       totalEmployees,
       employeeOrders,
@@ -50,8 +53,6 @@ const sendMessageMeal = async (req, res) => {
     if (
       !judulPekerjaan ||
       !subBidang ||
-      !requiredDate ||
-      !requestDate ||
       !dropPoint ||
       !totalEmployees ||
       !employeeOrders ||
@@ -65,7 +66,28 @@ const sendMessageMeal = async (req, res) => {
       });
     }
 
-    await messageService.sendMealOrder(req.body);
+    // Ensure fetch is loaded
+    if (!fetch) {
+      throw new Error("Fetch module not loaded yet");
+    }
+
+    // Fetch request details from API
+    const response = await fetch(
+      `${BACK_END_URL}/requests/approval/verify/${approvalToken}`
+    );
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to fetch request details");
+    }
+
+    const { requiredDate, requestDate } = data.data.request;
+
+    await messageService.sendMealOrder({
+      ...req.body,
+      requiredDate,
+      requestDate,
+    });
 
     res.status(200).json({
       status: true,
@@ -99,7 +121,28 @@ const sendToGA = async (req, res) => {
       });
     }
 
-    await messageService.sendToGA(req.body);
+    // Ensure fetch is loaded
+    if (!fetch) {
+      throw new Error("Fetch module not loaded yet");
+    }
+
+    // Fetch request details from API
+    const response = await fetch(
+      `${BACK_END_URL}/requests/approval/verify/${approvalToken}`
+    );
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to fetch request details");
+    }
+
+    const { requiredDate, requestDate } = data.data.request;
+
+    await messageService.sendToGA({
+      ...req.body,
+      requiredDate,
+      requestDate,
+    });
 
     res.status(200).json({
       status: true,
@@ -133,7 +176,28 @@ const sendToKitchen = async (req, res) => {
       });
     }
 
-    await messageService.sendToKitchen(req.body);
+    // Ensure fetch is loaded
+    if (!fetch) {
+      throw new Error("Fetch module not loaded yet");
+    }
+
+    // Fetch request details from API
+    const response = await fetch(
+      `${BACK_END_URL}/requests/approval/verify/${approvalToken}`
+    );
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Failed to fetch request details");
+    }
+
+    const { requiredDate, requestDate } = data.data.request;
+
+    await messageService.sendToKitchen({
+      ...req.body,
+      requiredDate,
+      requestDate,
+    });
 
     res.status(200).json({
       status: true,
