@@ -58,7 +58,13 @@ class MessageService {
       order.orderItems.forEach((item) => {
         if (item.menuItem.name === "CUSTOM") {
           // Handle custom menu items with notes
-          menuItems.push(`${item.notes}`);
+          const customItems = item.notes.split(",").map((note) => note.trim());
+          customItems.forEach((customItem) => {
+            const existingCustomItem = menuItems.find((i) => i === customItem);
+            if (!existingCustomItem) {
+              menuItems.push(customItem);
+            }
+          });
         } else {
           // Regular menu items
           const existingItem = menuItems.find(
@@ -156,12 +162,13 @@ class MessageService {
 
     const portions = this.calculatePortions(employeeOrders);
     const formattedRequiredDate = this.getMealCategory(requiredDate);
-    console.log({ requiredDate });
-    console.log({ formattedRequiredDate });
+    // console.log({ requiredDate });
+    // console.log({ formattedRequiredDate });
     const formatedRequestDate = this.formatRequestDate(requestDate);
     const formatedLink = `${FRONT_END_URL}/approval/${approvalToken}`;
 
     const menuPesanan = this.formatMenuPesanan(employeeOrders);
+    console.log(menuPesanan);
     const templateData = {
       id,
       judulPekerjaan,
